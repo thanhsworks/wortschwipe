@@ -274,6 +274,18 @@
     from{ opacity:0; transform: translateY(8px); }
     to{ opacity:1; transform: translateY(0); }
   }
+  .reveal-why{
+    margin-top: 12px;
+    max-width: 320px;
+    font-size: 13px;
+    line-height:1.4;
+    color: rgba(255,255,255,0.85);
+    background: rgba(0,0,0,0.14);
+    border-radius: 12px;
+    padding: 8px 14px;
+    opacity:0;
+    animation: fadeUp 0.4s ease 0.4s forwards;
+  }
   .reveal-milestone{
     margin-top: 16px;
     font-size: clamp(16px, 5vw, 21px);
@@ -299,6 +311,11 @@
     font-size:12px;
     color: rgba(255,255,255,0.6);
     font-weight:600;
+    animation: hintPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes hintPulse{
+    0%, 100%{ opacity:0.5; }
+    50%{ opacity:1; }
   }
 
   .confetti-layer{
@@ -395,6 +412,7 @@
   <div class="reveal-title" id="revealTitle"></div>
   <div class="reveal-sub" id="revealSub"></div>
   <div class="reveal-meaning" id="revealMeaning"></div>
+  <div class="reveal-why" id="revealWhy"></div>
   <div class="reveal-milestone" id="revealMilestone"></div>
   <div class="reveal-hint">tap to continue</div>
 </div>
@@ -405,118 +423,118 @@
 
   // ---------------- Word bank ----------------
   var WORDS = [
-    {w:"Tisch", g:"der", en:"table"},
-    {w:"Stuhl", g:"der", en:"chair"},
-    {w:"Hund", g:"der", en:"dog"},
-    {w:"Mann", g:"der", en:"man"},
-    {w:"Baum", g:"der", en:"tree"},
-    {w:"Apfel", g:"der", en:"apple"},
-    {w:"Wagen", g:"der", en:"car"},
-    {w:"Computer", g:"der", en:"computer"},
-    {w:"Freund", g:"der", en:"friend"},
-    {w:"Käse", g:"der", en:"cheese"},
-    {w:"Kaffee", g:"der", en:"coffee"},
-    {w:"Wein", g:"der", en:"wine"},
-    {w:"Mond", g:"der", en:"moon"},
-    {w:"Sommer", g:"der", en:"summer"},
-    {w:"Winter", g:"der", en:"winter"},
-    {w:"Schrank", g:"der", en:"closet"},
-    {w:"Garten", g:"der", en:"garden"},
-    {w:"Himmel", g:"der", en:"sky"},
-    {w:"Berg", g:"der", en:"mountain"},
-    {w:"Fisch", g:"der", en:"fish"},
-    {w:"Vater", g:"der", en:"father"},
-    {w:"Bruder", g:"der", en:"brother"},
-    {w:"Sohn", g:"der", en:"son"},
-    {w:"Lehrer", g:"der", en:"teacher"},
-    {w:"Arzt", g:"der", en:"doctor"},
-    {w:"Tag", g:"der", en:"day"},
-    {w:"Monat", g:"der", en:"month"},
-    {w:"Regen", g:"der", en:"rain"},
-    {w:"Schnee", g:"der", en:"snow"},
-    {w:"Wind", g:"der", en:"wind"},
-    {w:"See", g:"der", en:"lake"},
-    {w:"Fluss", g:"der", en:"river"},
-    {w:"Zug", g:"der", en:"train"},
-    {w:"Bahnhof", g:"der", en:"train station"},
-    {w:"Markt", g:"der", en:"market"},
-    {w:"Schlüssel", g:"der", en:"key"},
-    {w:"Name", g:"der", en:"name"},
+    {w:"Tisch", g:"der", en:"table", why:"No reliable rule — just memorize this one"},
+    {w:"Stuhl", g:"der", en:"chair", why:"Furniture nouns rarely follow a pattern — memorize it"},
+    {w:"Hund", g:"der", en:"dog", why:"Common default gender for many animal names"},
+    {w:"Mann", g:"der", en:"man", why:"Male person — natural gender"},
+    {w:"Baum", g:"der", en:"tree", why:"Generic 'tree' is der, though tree species are often die"},
+    {w:"Apfel", g:"der", en:"apple", why:"Most fruits are die, but Apfel is a common exception"},
+    {w:"Wagen", g:"der", en:"car", why:"Nouns ending in -en are often der"},
+    {w:"Computer", g:"der", en:"computer", why:"Agent/machine nouns ending in -er are usually der"},
+    {w:"Freund", g:"der", en:"friend", why:"Male person — natural gender"},
+    {w:"Käse", g:"der", en:"cheese", why:"Ends in -e but is a masculine exception"},
+    {w:"Kaffee", g:"der", en:"coffee", why:"Most drink names are der (Kaffee, Wein, Saft)"},
+    {w:"Wein", g:"der", en:"wine", why:"Most drink names are der"},
+    {w:"Mond", g:"der", en:"moon", why:"Celestial body, traditionally der (paired with die Sonne)"},
+    {w:"Sommer", g:"der", en:"summer", why:"Seasons are always der"},
+    {w:"Winter", g:"der", en:"winter", why:"Seasons are always der"},
+    {w:"Schrank", g:"der", en:"closet", why:"No reliable rule — just memorize this one"},
+    {w:"Garten", g:"der", en:"garden", why:"Nouns ending in -en are often der"},
+    {w:"Himmel", g:"der", en:"sky", why:"Nouns ending in -el are often der"},
+    {w:"Berg", g:"der", en:"mountain", why:"Landform nouns (Berg, Fluss, Wald) are usually der"},
+    {w:"Fisch", g:"der", en:"fish", why:"Common default gender for many animal names"},
+    {w:"Vater", g:"der", en:"father", why:"Male person — natural gender"},
+    {w:"Bruder", g:"der", en:"brother", why:"Male person — natural gender"},
+    {w:"Sohn", g:"der", en:"son", why:"Male person — natural gender"},
+    {w:"Lehrer", g:"der", en:"teacher", why:"Male profession ending in -er — der by default"},
+    {w:"Arzt", g:"der", en:"doctor", why:"Male person/profession — natural gender"},
+    {w:"Tag", g:"der", en:"day", why:"Days, months, and seasons are (almost) always der"},
+    {w:"Monat", g:"der", en:"month", why:"Days, months, and seasons are (almost) always der"},
+    {w:"Regen", g:"der", en:"rain", why:"Weather phenomena are almost always der"},
+    {w:"Schnee", g:"der", en:"snow", why:"Weather phenomena are almost always der"},
+    {w:"Wind", g:"der", en:"wind", why:"Weather phenomena are almost always der"},
+    {w:"See", g:"der", en:"lake", why:"Tricky: der See = lake, but die See = sea!"},
+    {w:"Fluss", g:"der", en:"river", why:"Landform nouns (Fluss, Berg, Wald) are usually der"},
+    {w:"Zug", g:"der", en:"train", why:"Most vehicle/transport nouns are der"},
+    {w:"Bahnhof", g:"der", en:"train station", why:"Compound noun — takes the gender of Hof (der)"},
+    {w:"Markt", g:"der", en:"market", why:"No reliable rule — just memorize this one"},
+    {w:"Schlüssel", g:"der", en:"key", why:"Nouns ending in -el are often der"},
+    {w:"Name", g:"der", en:"name", why:"Ends in -e but is a masculine 'weak noun' exception"},
 
-    {w:"Lampe", g:"die", en:"lamp"},
-    {w:"Katze", g:"die", en:"cat"},
-    {w:"Frau", g:"die", en:"woman"},
-    {w:"Blume", g:"die", en:"flower"},
-    {w:"Tür", g:"die", en:"door"},
-    {w:"Uhr", g:"die", en:"clock"},
-    {w:"Schule", g:"die", en:"school"},
-    {w:"Straße", g:"die", en:"street"},
-    {w:"Sonne", g:"die", en:"sun"},
-    {w:"Musik", g:"die", en:"music"},
-    {w:"Küche", g:"die", en:"kitchen"},
-    {w:"Zeitung", g:"die", en:"newspaper"},
-    {w:"Familie", g:"die", en:"family"},
-    {w:"Sprache", g:"die", en:"language"},
-    {w:"Stadt", g:"die", en:"city"},
-    {w:"Nacht", g:"die", en:"night"},
-    {w:"Woche", g:"die", en:"week"},
-    {w:"Milch", g:"die", en:"milk"},
-    {w:"Tasche", g:"die", en:"bag"},
-    {w:"Brille", g:"die", en:"glasses"},
-    {w:"Mutter", g:"die", en:"mother"},
-    {w:"Schwester", g:"die", en:"sister"},
-    {w:"Tochter", g:"die", en:"daughter"},
-    {w:"Arbeit", g:"die", en:"work"},
-    {w:"Zeit", g:"die", en:"time"},
-    {w:"Idee", g:"die", en:"idea"},
-    {w:"Frage", g:"die", en:"question"},
-    {w:"Antwort", g:"die", en:"answer"},
-    {w:"Geschichte", g:"die", en:"story"},
-    {w:"Liebe", g:"die", en:"love"},
-    {w:"Reise", g:"die", en:"trip"},
-    {w:"Kirche", g:"die", en:"church"},
-    {w:"Wohnung", g:"die", en:"apartment"},
-    {w:"Tasse", g:"die", en:"cup"},
-    {w:"Flasche", g:"die", en:"bottle"},
-    {w:"Farbe", g:"die", en:"color"},
-    {w:"Welt", g:"die", en:"world"},
+    {w:"Lampe", g:"die", en:"lamp", why:"Nouns ending in -e are usually die"},
+    {w:"Katze", g:"die", en:"cat", why:"Nouns ending in -e are usually die"},
+    {w:"Frau", g:"die", en:"woman", why:"Female person — natural gender"},
+    {w:"Blume", g:"die", en:"flower", why:"Nouns ending in -e are usually die"},
+    {w:"Tür", g:"die", en:"door", why:"No reliable rule — just memorize this one"},
+    {w:"Uhr", g:"die", en:"clock", why:"Doesn't end in -e — an exception to memorize"},
+    {w:"Schule", g:"die", en:"school", why:"Nouns ending in -e are usually die"},
+    {w:"Straße", g:"die", en:"street", why:"Nouns ending in -e are usually die"},
+    {w:"Sonne", g:"die", en:"sun", why:"Ends in -e, paired with der Mond"},
+    {w:"Musik", g:"die", en:"music", why:"Nouns ending in -ik are usually die"},
+    {w:"Küche", g:"die", en:"kitchen", why:"Nouns ending in -e are usually die"},
+    {w:"Zeitung", g:"die", en:"newspaper", why:"Nouns ending in -ung are always die"},
+    {w:"Familie", g:"die", en:"family", why:"Nouns ending in -e are usually die"},
+    {w:"Sprache", g:"die", en:"language", why:"Nouns ending in -e are usually die"},
+    {w:"Stadt", g:"die", en:"city", why:"No reliable rule — just memorize this one"},
+    {w:"Nacht", g:"die", en:"night", why:"Abstract/time nouns ending in -t are often die"},
+    {w:"Woche", g:"die", en:"week", why:"Nouns ending in -e are usually die"},
+    {w:"Milch", g:"die", en:"milk", why:"No reliable rule — just memorize this one"},
+    {w:"Tasche", g:"die", en:"bag", why:"Nouns ending in -e are usually die"},
+    {w:"Brille", g:"die", en:"glasses", why:"Nouns ending in -e are usually die"},
+    {w:"Mutter", g:"die", en:"mother", why:"Female person — natural gender"},
+    {w:"Schwester", g:"die", en:"sister", why:"Female person — natural gender"},
+    {w:"Tochter", g:"die", en:"daughter", why:"Female person — natural gender"},
+    {w:"Arbeit", g:"die", en:"work", why:"Abstract nouns ending in -t are often die"},
+    {w:"Zeit", g:"die", en:"time", why:"Abstract nouns ending in -t are often die"},
+    {w:"Idee", g:"die", en:"idea", why:"Abstract nouns ending in -e are usually die"},
+    {w:"Frage", g:"die", en:"question", why:"Nouns ending in -e are usually die"},
+    {w:"Antwort", g:"die", en:"answer", why:"Abstract nouns ending in -t are often die"},
+    {w:"Geschichte", g:"die", en:"story", why:"Nouns ending in -e are usually die"},
+    {w:"Liebe", g:"die", en:"love", why:"Nouns ending in -e are usually die"},
+    {w:"Reise", g:"die", en:"trip", why:"Nouns ending in -e are usually die"},
+    {w:"Kirche", g:"die", en:"church", why:"Nouns ending in -e are usually die"},
+    {w:"Wohnung", g:"die", en:"apartment", why:"Nouns ending in -ung are always die"},
+    {w:"Tasse", g:"die", en:"cup", why:"Nouns ending in -e are usually die"},
+    {w:"Flasche", g:"die", en:"bottle", why:"Nouns ending in -e are usually die"},
+    {w:"Farbe", g:"die", en:"color", why:"Nouns ending in -e are usually die"},
+    {w:"Welt", g:"die", en:"world", why:"Abstract nouns ending in -t are often die"},
 
-    {w:"Buch", g:"das", en:"book"},
-    {w:"Haus", g:"das", en:"house"},
-    {w:"Auto", g:"das", en:"car"},
-    {w:"Kind", g:"das", en:"child"},
-    {w:"Fenster", g:"das", en:"window"},
-    {w:"Bett", g:"das", en:"bed"},
-    {w:"Wasser", g:"das", en:"water"},
-    {w:"Brot", g:"das", en:"bread"},
-    {w:"Mädchen", g:"das", en:"girl"},
-    {w:"Handy", g:"das", en:"cell phone"},
-    {w:"Jahr", g:"das", en:"year"},
-    {w:"Bier", g:"das", en:"beer"},
-    {w:"Ei", g:"das", en:"egg"},
-    {w:"Land", g:"das", en:"country"},
-    {w:"Zimmer", g:"das", en:"room"},
-    {w:"Restaurant", g:"das", en:"restaurant"},
-    {w:"Telefon", g:"das", en:"telephone"},
-    {w:"Fahrrad", g:"das", en:"bicycle"},
-    {w:"Papier", g:"das", en:"paper"},
-    {w:"Geld", g:"das", en:"money"},
-    {w:"Baby", g:"das", en:"baby"},
-    {w:"Auge", g:"das", en:"eye"},
-    {w:"Ohr", g:"das", en:"ear"},
-    {w:"Herz", g:"das", en:"heart"},
-    {w:"Gesicht", g:"das", en:"face"},
-    {w:"Hemd", g:"das", en:"shirt"},
-    {w:"Hotel", g:"das", en:"hotel"},
-    {w:"Büro", g:"das", en:"office"},
-    {w:"Museum", g:"das", en:"museum"},
-    {w:"Kino", g:"das", en:"cinema"},
-    {w:"Foto", g:"das", en:"photo"},
-    {w:"Spiel", g:"das", en:"game"},
-    {w:"Wort", g:"das", en:"word"},
-    {w:"Problem", g:"das", en:"problem"},
-    {w:"Wetter", g:"das", en:"weather"},
-    {w:"Bad", g:"das", en:"bathroom"}
+    {w:"Buch", g:"das", en:"book", why:"No reliable rule — just memorize this one"},
+    {w:"Haus", g:"das", en:"house", why:"No reliable rule — just memorize this one"},
+    {w:"Auto", g:"das", en:"car", why:"Nouns ending in -o are usually das"},
+    {w:"Kind", g:"das", en:"child", why:"Young beings (Kind, Baby) are often das"},
+    {w:"Fenster", g:"das", en:"window", why:"Ends in -er but is a neuter exception"},
+    {w:"Bett", g:"das", en:"bed", why:"No reliable rule — just memorize this one"},
+    {w:"Wasser", g:"das", en:"water", why:"Ends in -er but is a neuter exception"},
+    {w:"Brot", g:"das", en:"bread", why:"No reliable rule — just memorize this one"},
+    {w:"Mädchen", g:"das", en:"girl", why:"Diminutives ending in -chen are always das"},
+    {w:"Handy", g:"das", en:"cell phone", why:"Modern loanwords often default to das"},
+    {w:"Jahr", g:"das", en:"year", why:"Exception: unlike Tag and Monat, Jahr is das"},
+    {w:"Bier", g:"das", en:"beer", why:"Exception to the 'drinks are der' pattern"},
+    {w:"Ei", g:"das", en:"egg", why:"No reliable rule — just memorize this one"},
+    {w:"Land", g:"das", en:"country", why:"Country and place names are usually das"},
+    {w:"Zimmer", g:"das", en:"room", why:"Ends in -er but is a neuter exception"},
+    {w:"Restaurant", g:"das", en:"restaurant", why:"French loanwords ending in -ant are often das"},
+    {w:"Telefon", g:"das", en:"telephone", why:"Greek-origin loanwords ending in -on are usually das"},
+    {w:"Fahrrad", g:"das", en:"bicycle", why:"Compound noun — takes the gender of Rad (das)"},
+    {w:"Papier", g:"das", en:"paper", why:"Material/substance nouns are often das"},
+    {w:"Geld", g:"das", en:"money", why:"Material and abstract mass nouns are often das"},
+    {w:"Baby", g:"das", en:"baby", why:"Young beings (Baby, Kind) are usually das"},
+    {w:"Auge", g:"das", en:"eye", why:"Ends in -e but is a neuter body-part exception"},
+    {w:"Ohr", g:"das", en:"ear", why:"Many body parts (Auge, Ohr, Herz) are das"},
+    {w:"Herz", g:"das", en:"heart", why:"Many body parts (Auge, Ohr, Herz) are das"},
+    {w:"Gesicht", g:"das", en:"face", why:"Nouns starting with Ge- are usually das"},
+    {w:"Hemd", g:"das", en:"shirt", why:"No reliable rule — just memorize this one"},
+    {w:"Hotel", g:"das", en:"hotel", why:"Ends in -el but is a das loanword exception"},
+    {w:"Büro", g:"das", en:"office", why:"Nouns ending in -o are usually das"},
+    {w:"Museum", g:"das", en:"museum", why:"Latin-origin nouns ending in -um are almost always das"},
+    {w:"Kino", g:"das", en:"cinema", why:"Nouns ending in -o are usually das"},
+    {w:"Foto", g:"das", en:"photo", why:"Nouns ending in -o are usually das"},
+    {w:"Spiel", g:"das", en:"game", why:"Deverbal nouns (spielen → Spiel) are often das"},
+    {w:"Wort", g:"das", en:"word", why:"No reliable rule — just memorize this one"},
+    {w:"Problem", g:"das", en:"problem", why:"Greek-origin nouns ending in -em are usually das"},
+    {w:"Wetter", g:"das", en:"weather", why:"Exception: unlike Regen/Schnee/Wind, Wetter is das"},
+    {w:"Bad", g:"das", en:"bathroom", why:"Deverbal noun (from baden) — often das like Spiel"}
   ];
 
   var GENDER_META = {
@@ -624,6 +642,7 @@
   var revealTitle = document.getElementById("revealTitle");
   var revealSub = document.getElementById("revealSub");
   var revealMeaning = document.getElementById("revealMeaning");
+  var revealWhy = document.getElementById("revealWhy");
   var revealMilestone = document.getElementById("revealMilestone");
   var confettiLayer = document.getElementById("confettiLayer");
 
@@ -765,6 +784,11 @@
   });
 
   window.addEventListener("keydown", function(e){
+    if (revealEl.classList.contains("show")){
+      e.preventDefault();
+      hideReveal();
+      return;
+    }
     if (locked) return;
     var map = {ArrowLeft:"der", ArrowRight:"die", ArrowUp:"das"};
     var g = map[e.key];
@@ -829,8 +853,6 @@
     applyPositions(false);
   }
 
-  var revealTimer = null;
-
   function spawnConfetti(color, big){
     confettiLayer.innerHTML = "";
     var colors = [color, "#ffffff", "#ffe066", "#ff8fab"];
@@ -856,7 +878,6 @@
   }
 
   function showReveal(isCorrect, wordObj, direction){
-    clearTimeout(revealTimer);
     revealEl.className = "reveal show " + (isCorrect ? "correct " + wordObj.g : "wrong");
 
     var isMilestone = isCorrect && streak > 0 && streak % 5 === 0;
@@ -872,6 +893,7 @@
       confettiLayer.innerHTML = "";
     }
     revealMeaning.textContent = "“" + wordObj.en + "”";
+    revealWhy.textContent = "💡 " + wordObj.why;
 
     revealMilestone.classList.remove("show");
     if (isMilestone){
@@ -888,9 +910,6 @@
     revealTitle.style.animation = "none";
     void revealTitle.offsetWidth;
     revealTitle.style.animation = "";
-
-    var duration = isMilestone ? 1900 : (isCorrect ? 1250 : 1400);
-    revealTimer = setTimeout(hideReveal, duration);
   }
 
   function hideReveal(){
@@ -902,7 +921,6 @@
 
   revealEl.addEventListener("click", function(){
     if (!revealEl.classList.contains("show")) return;
-    clearTimeout(revealTimer);
     hideReveal();
   });
 
