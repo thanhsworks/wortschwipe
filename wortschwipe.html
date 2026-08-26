@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Wortschwipe — Learn German Genders</title>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script>
+  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
 <style>
   :root{
     --der: #2F6FED;
@@ -600,6 +608,13 @@
     playTone(ctx, 1046.50, 0.22, 0.32, "triangle", 0.26);
   }
 
+  // ---------------- Analytics (Vercel Web Analytics) ----------------
+  function trackEvent(name, data){
+    if (typeof window.va === "function"){
+      window.va("event", { name: name, data: data });
+    }
+  }
+
   // ---------------- In-memory state ----------------
   var correctCount = 0;
   var totalCount = 0;
@@ -830,6 +845,11 @@
       playWrongSound();
     }
     updateScoreUI();
+    trackEvent(isCorrect ? "swipe_correct" : "swipe_wrong", {
+      word: wordObj.w,
+      gender: wordObj.g,
+      guessed: direction
+    });
 
     showReveal(isCorrect, wordObj, direction);
 
@@ -902,6 +922,7 @@
       void revealMilestone.offsetWidth;
       revealMilestone.classList.add("show");
       playMilestoneSound();
+      trackEvent("streak_milestone", { streak: streak });
     } else {
       revealMilestone.textContent = "";
     }
